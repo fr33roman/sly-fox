@@ -1531,10 +1531,36 @@ ul, ol {
 }
 
 /* ===== рабочий сайт sly-fox.pro: переключатель языка — ссылки (clients/slyfox/prod/build9a.py) ===== */
-a.sfa-lang__btn{text-decoration:none}
 html[lang="ka"]{--font:'Geologica','Noto Sans Georgian',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
 html[lang="ka"] .sfa-h2,html[lang="ka"] .sfa-h3{overflow-wrap:anywhere}
+/* без синего квадрата при нажатии на телефоне (слово Романа 06.11); рамка фокуса — только с клавиатуры */
+*{-webkit-tap-highlight-color:transparent}
+:focus:not(:focus-visible){outline:none}
+:focus-visible{outline:2px solid var(--fox);outline-offset:2px}
+/* язык — одна кнопка с выпадающей панелью (слово Романа 06.11) */
+.sfa-lang{position:relative;display:block;padding:0;background:none;border:0}
+.sfa-lang>summary{list-style:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px 0 14px;
+  border-radius:var(--radius-pill);background:#111319;border:1px solid var(--line);color:var(--text);font-size:.82rem;font-weight:600;
+  cursor:pointer;user-select:none;transition:border-color .2s var(--ease-out)}
+.sfa-lang>summary::-webkit-details-marker{display:none}
+.sfa-lang>summary:hover,.sfa-lang[open]>summary{border-color:var(--line-fox)}
+.sfa-lang__chev{width:10px;height:10px;transition:transform .25s var(--ease-out)}
+.sfa-lang[open] .sfa-lang__chev{transform:rotate(180deg)}
+.sfa-lang__panel{position:absolute;right:0;top:calc(100% + 8px);min-width:168px;padding:6px;display:grid;gap:2px;
+  background:#15171E;border:1px solid var(--line-fox);border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.45);z-index:60}
+.sfa-lang[open] .sfa-lang__panel{animation:sfaLangIn .22s var(--ease-out)}
+@keyframes sfaLangIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.sfa-lang__item{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0 14px;border-radius:11px;
+  color:var(--dim);font-size:.92rem;font-weight:500;text-decoration:none}
+.sfa-lang__item b{font-size:.74rem;letter-spacing:.06em;color:var(--dim)}
+.sfa-lang__item:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.sfa-lang__item.is-active{color:var(--text);background:rgba(255,255,255,.04)}
+.sfa-lang__item.is-active b{color:var(--fox-hi)}
 @media (max-width:640px){
-  .sfa-lang{display:inline-flex}
-  .sfa-lang__btn{min-width:34px;padding:0 6px;font-size:.74rem}
+  .sfa-lang,.sfa-btn--header{display:inline-flex}
+  .sfa-lang>summary{min-height:40px;padding:0 10px 0 12px;font-size:.78rem}
+  .sfa-btn--header{min-height:40px;padding:0 14px;font-size:.84rem;white-space:nowrap}
+  .sfa-header__tools{gap:6px}
 }
+@media (max-width:360px){.sfa-brand__txt{display:none}}
+@media (prefers-reduced-motion:reduce){.sfa-lang[open] .sfa-lang__panel{animation:none}}
